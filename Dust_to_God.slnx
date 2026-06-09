@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Dust_to_God/Dust_to_God.vcxproj" Id="f503bc75-e5c3-49d0-aa1e-4a071c9a38fb" />
+</Solution>
