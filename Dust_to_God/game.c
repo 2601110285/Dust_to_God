@@ -173,6 +173,7 @@ int askRestart() {
 /* ============================================================
  * [초기화 및 로직 함수들]
  * ============================================================ */
+// 스테이지
 void initMap(int stage) { 
     int i, j; 
     for (i = 0; i < ROWS; i++) { 
@@ -205,6 +206,7 @@ void initMap(int stage) {
     } 
 } 
 
+// 아이템 추가 생성
 void spawnContinuousItems() { 
     if (currentStage == MINIGAME_1) return; // 미니게임 중일 때는 함수 종료
 
@@ -218,6 +220,7 @@ void spawnContinuousItems() {
     } 
 } 
 
+// 블랙홀 추격
 void updateBlackHoleChase() { 
     if (currentStage < STAGE_2 || currentStage > STAGE_4) return; // 1단계거나 미니게임 중 블랙홀이 안 나오므로 바로 종료
 
@@ -239,6 +242,7 @@ void updateBlackHoleChase() {
     }
 } 
 
+// 렌더링 최적화
 void drawMap() { 
     setCursorPosition(0, 0);
     setColor(8); 
@@ -272,7 +276,8 @@ void drawMap() {
     setColor(7);
 } 
 
-void drawHUD() { // 현재 상태 출력
+// 현재 상태 출력
+void drawHUD() { 
     setColor(11); printf("\n === 우주 스케일: ");
     setColor(15);
     if (currentStage == STAGE_1) printf("우주 먼지"); 
@@ -287,6 +292,7 @@ void drawHUD() { // 현재 상태 출력
     printf("\n"); 
 } 
 
+// 플레이어 이동 및 아이템 상호작용
 void processInput() {
     if (_kbhit()) { 
         int key = _getch();
@@ -340,7 +346,7 @@ void runMiniGame1() {
         if (miniTurn % dropDelay == 0) { 
             for (int i = ROWS - 1; i > 0; i--) { 
                 for (int j = 0; j < COLS; j++) 
-                    map[i][j] = map[i - 1][j]; // [변화] 윗줄에 있던 운석을 아래쪽 칸으로 복사
+                    map[i][j] = map[i - 1][j]; // 윗줄에 있던 운석을 아래쪽 칸으로 복사
             }
             for (int j = 0; j < COLS; j++) map[0][j] = ' '; 
             int meteorCount = difficultyMult * 2; // 새로 생성할 운석 개수 난이도 비례
@@ -352,9 +358,9 @@ void runMiniGame1() {
             isGameOver = 1; 
 
         drawMap();
-        setColor(14); printf("\n\t=== [ 미니게임: 운석 지대 돌파 ] ===\n"); 
-        setColor(7);  printf("\t남은 돌파 거리: %d / %d\n", maxTurns - miniTurn, maxTurns); 
-        setColor(12); printf("\t경고: 운석에 닿으면 즉시 파멸합니다!\n");
+        setColor(14); printf("\n=== [ 미니게임: 운석 지대 돌파 ] ===\n"); 
+        setColor(7);  printf("남은 돌파 거리: %d / %d\n", maxTurns - miniTurn, maxTurns); 
+        setColor(12); printf("경고: 운석에 닿으면 즉시 파멸합니다!\n");
 
         miniTurn++;
         Sleep(40);
@@ -371,7 +377,7 @@ void runMiniGame1() {
 /* ============================================================
  * [엔딩: 빅뱅 연출 및 나선 은하 렌더링]
  * ============================================================ */
-void playEndingAnimation() { // 게임을 깼을 때 화려하게 퍼져나가는 빅뱅 이펙트
+void playEndingAnimation() {
     int r, i, j; 
     int centerRow = ROWS / 2; 
     int centerCol = COLS / 2; 
@@ -554,8 +560,8 @@ int main() { // 뼈대 함수
             Sleep(50);
         } 
 
-        // 4. 게임 종료 후 결과 화면 출력 (성공 or 실패)
-        // 성공
+        // 4. 게임 종료 후 결과 화면 출력
+        // 클리어
         if (currentStage == STAGE_ENDING)
             playEndingAnimation(); 
         // 실패
