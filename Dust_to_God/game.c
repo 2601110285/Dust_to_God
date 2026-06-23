@@ -287,9 +287,10 @@ void drawHUD() {
 
     setColor(11); printf(" ===\n");
     setColor(7); printf(" 질량: %d / %d  |  ", playerMass, targetMass);
-    if (currentStage >= STAGE_2 && currentStage <= STAGE_4) 
-        setColor(12); printf("블랙홀과의 거리: %d", abs(bhRow - playerRow) + abs(bhCol - playerCol)); 
-    printf("\n"); 
+    if (currentStage >= STAGE_2 && currentStage <= STAGE_4) {
+        setColor(12); 
+        printf("블랙홀과의 거리: %d\n", abs(bhRow - playerRow) + abs(bhCol - playerCol));
+    }
 } 
 
 // 플레이어 이동 및 아이템 상호작용
